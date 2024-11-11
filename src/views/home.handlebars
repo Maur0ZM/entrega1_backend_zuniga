@@ -1,0 +1,14 @@
+<h1>Home</h1>
+
+<div id="products">
+    {{#each products}}
+        <div class="product">
+            <h3>{{this.title}}</h3>
+            <p>{{this.description}}</p>
+            <p>Precio: {{this.price}}</p>
+        </div>
+    {{/each}}
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="index.js"></script>

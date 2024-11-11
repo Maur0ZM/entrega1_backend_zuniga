@@ -1,6 +1,6 @@
 import { Router } from "express";
 import productsManager from "../managers/products.manager.js";
-import { productsValidator } from "../middlewares/products.middlewares.js";
+import { productsValidatorPostman } from "../middlewares/products.middlewares.js";
 
 const routerProducts = Router();
 
@@ -13,7 +13,7 @@ routerProducts.get("/", async (req, res) => {
   }
 });
 
-routerProducts.post("/", [productsValidator], async (req, res) => {
+routerProducts.post("/", [productsValidatorPostman], async (req, res) => {
   try {
     const product = await productsManager.createProduct(req.body);
     res.status(201).json({ id: product.id, title: product.title });

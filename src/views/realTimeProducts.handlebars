@@ -1,0 +1,69 @@
+<h1>Real time products</h1>
+
+<div id="real-time-products">
+
+</div>
+
+<div id="cont-products">
+  <h2>Crear productos</h2>
+  <label for="title">Title</label>
+  <input
+    type="text"
+    id="title"
+    name="title"
+    placeholder="Enter product title"
+    required
+  />
+
+  <label for="description">Description</label>
+  <input
+    type="text"
+    id="description"
+    name="description"
+    placeholder="Enter product description"
+    required
+  />
+
+  <label for="code">Code</label>
+  <input
+    type="number"
+    id="code"
+    name="code"
+    placeholder="Enter product code"
+    required
+  />
+
+  <label for="price">Price</label>
+  <input
+    type="number"
+    id="price"
+    name="price"
+    placeholder="Enter product price"
+    required
+  />
+
+  <label for="status">Status</label>
+  <input type="checkbox" id="status" name="status" />
+
+  <label for="stock">Stock</label>
+  <input
+    type="number"
+    id="stock"
+    name="stock"
+    placeholder="Enter product stock"
+    required
+  />
+
+  <label for="category">Category</label>
+  <input
+    type="text"
+    id="category"
+    name="category"
+    placeholder="Enter product category"
+    required
+  />
+  <button id="send">Send</button>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="index.js"></script>
