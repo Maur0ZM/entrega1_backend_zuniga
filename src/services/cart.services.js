@@ -1,6 +1,6 @@
 import { cartDao } from "../daos/mongodb/cart.daos.js";
 import { CustomError } from "../utils/error.custom.js";
-import * as productService from './products.services.js'
+import * as productService from "./products.services.js";
 
 export const getAllCarts = async (page, limit, first_name, sort) => {
   try {
@@ -54,12 +54,54 @@ export const getById = async (id) => {
 };
 
 export const addProductToCart = async (cartId, productId) => {
-    try {
-        await productService.getById(productId);
-        const cartUpd = await cartDao.addProductToCart(cartId, productId);
-        if (!cartUpd) throw new CustomError("Error adding pet", 404);
-        return cartUpd;
-    } catch (error) {
-        throw error;
-    }
+  try {
+    await productService.getById(productId);
+    const cartUpd = await cartDao.addProductToCart(cartId, productId);
+    if (!cartUpd) throw new CustomError("Error al añadir el producto", 404);
+    return cartUpd;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const removeProductFromCart = async (cartId, productId) => {
+  try {
+    await productService.getById(productId);
+    const cartUpd = await cartDao.removeProductFromCart(cartId, productId);
+    if (!cartUpd) throw new CustomError("Error al eliminar el producto", 404);
+    return cartUpd;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateProductFromCart = async (cartId, newProducts) =>{
+  try {
+    const cartUpd = await cartDao.updateProductFromCart(cartId, newProducts);
+    if(!cartUpd) throw new CustomError('Error al actualizar productos', 404);
+    return cartUpd;
+  } catch (error) {
+    throw error
+  }
+};
+
+export const updateProductFromCartC = async (cartId, pruductId, newProducts) => {
+  try {
+    await productService.getById(pruductId)
+    const cartUpd = await cartDao.updateProductFromCartC(cartId, pruductId,newProducts);
+    if(!cartUpd) throw new CustomError('Error al actualizar productos', 404);
+    return cartUpd;
+  } catch (error) {
+    throw error
+  }
+}
+
+export const removeAllProductsFromCart = async (cartId) => {
+  try {
+    const cartUpd = await cartDao.removeAllProductsFromCart(cartId);
+    if(!cartUpd) throw new CustomError('Error al eliminar productos', 404);
+    return cartUpd;
+  } catch (error) {
+    throw error;
+  }
 }

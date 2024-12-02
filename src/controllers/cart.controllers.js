@@ -3,12 +3,7 @@ import * as services from "../services/cart.services.js";
 export const getAllCarts = async (req, res, next) => {
   try {
     const { page, limit, first_name, sort } = req.query;
-    const response = await services.getAllCarts(
-      page,
-      limit,
-      first_name,
-      sort
-    );
+    const response = await services.getAllCarts(page, limit, first_name, sort);
     res.json({
       results: response.docs,
       info: {
@@ -17,7 +12,7 @@ export const getAllCarts = async (req, res, next) => {
         next: response.hasNextPage
           ? [
               `http://localhost:8080/products/view/realTimeProducts?page=${response.nextPage}`,
-              `http://localhost:8080/products?page=${response.nextPage}`
+              `http://localhost:8080/products?page=${response.nextPage}`,
             ]
           : null,
         prev: response.hasPrevPage
@@ -75,7 +70,7 @@ export const getById = async (req, res, next) => {
 export const renderRealTimeC = async (req, res, next) => {
   try {
     res.render("realTimeCarts", {
-      title: 'Real Time Carts'
+      title: "Real Time Carts",
     });
   } catch (error) {
     next(error);
@@ -83,12 +78,56 @@ export const renderRealTimeC = async (req, res, next) => {
 };
 
 export const addProductToCart = async (req, res, next) => {
-    try {
-        const { cartId } = req.params;
-        const { productId } = req.params;
-        const newProductToCart = await services.addProductToCart(cartId, productId);
-        res.json(newProductToCart);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { cartId } = req.params;
+    const { productId } = req.params;
+    const newProductToCart = await services.addProductToCart(cartId, productId);
+    res.json(newProductToCart);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const removeProductFromCart = async (req, res, next) => {
+  try {
+    const { cartId } = req.params;
+    const { productId } = req.params;
+    const updateCart = await services.removeProductFromCart(cartId, productId);
+    res.json(updateCart);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProductFromCart = async (req, res, next) => {
+  try {
+    const { newProducts } = req.body;
+    const { cartId } = req.params;
+    const updateCart = await services.updateProductFromCart(cartId, newProducts);
+    res.json(updateCart);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const updateProductFromCartC = async (req, res, next) => {
+  try {
+    const { newProducts } = req.body;
+    const { cartId } = req.params;
+    const { productId } = req.params;
+    const updateCart = await services.updateProductFromCartC(cartId, productId, newProducts);
+    res.json(updateCart);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const removeAllProductsFromCart = async (req, res, next) => {
+  try {
+    const { cartId } = req.params;
+    const updateCart = await services.removeAllProductsFromCart(cartId);
+    res.json(updateCart);
+  } catch (error) {
+    next(error);
+  }
 };

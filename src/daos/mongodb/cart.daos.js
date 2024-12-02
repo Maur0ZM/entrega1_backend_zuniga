@@ -11,7 +11,6 @@ class CartDaoMongo {
       let sortOrder = {};
       if (sort)
         sortOrder.age = sort === "asc" ? 1 : sort === "desc" ? -1 : null;
-      // $sort: { age: 1 }
       return await this.model.paginate(filter, {
         page,
         limit,
@@ -68,10 +67,63 @@ class CartDaoMongo {
 
   async removeProductFromCart(cartId, productId) {
     try {
-      await this.model.findByIdAndUpdate(
+      const response = await this.model.findByIdAndUpdate(
         cartId,
-        { $pull: { products: { _id: productId } } },
+        { $pull: { products: productId } },
         { new: true }
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async updateProductFromCart(cartId, newProducts) {
+    try {
+      const response = await this.model.updateOne(
+        { _id: cartId },
+        {
+          $set: {
+            products: newProducts,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async updateProductFromCartC(cartId, productId, newProducts) {
+    try {
+      const cart = await this.model.findOne({ _id: cartId });
+
+      if (!cart) {
+        throw new Error("Carrito no encontrado");
+      }
+      const updatedProducts = cart.products.reduce((acc, product) => {
+        if (product._id.toString() === productId) {
+          return [...acc, ...newProducts];
+        }
+        acc.push(product);
+        return acc;
+      }, []);
+
+      const response = await this.model.updateOne(
+        { _id: cartId },
+        { $set: { products: updatedProducts } }
+      );
+      return response;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async removeAllProductsFromCart(cartId) {
+    try {
+      const response = await this.model.updateOne(
+        { _id: cartId },
+        { $set: { products: [] } }
       );
       return response;
     } catch (error) {

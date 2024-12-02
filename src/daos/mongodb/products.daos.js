@@ -5,13 +5,20 @@ class ProductDaoMongo {
     this.model = model;
   }
 
-  async getAllProducts(page = 1, limit = 5, first_name, sort) {
+  async getAllProducts (page = 1, limit = 5, category, status, sort) {
     try {
-      const filter = first_name ? { first_name: first_name } : {};
+      const filter = {};
+      if (category || status !== undefined) {
+        filter.$or = [];
+        if (category) filter.$or.push({ category });
+        if (status !== undefined) filter.$or.push({ status });
+      }
+
       let sortOrder = {};
-      if (sort)
+      if (sort) {
         sortOrder.age = sort === "asc" ? 1 : sort === "desc" ? -1 : null;
-      // $sort: { age: 1 }
+      }
+
       return await this.model.paginate(filter, {
         page,
         limit,

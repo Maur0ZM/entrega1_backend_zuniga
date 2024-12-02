@@ -18,6 +18,14 @@ router.delete('/:id', controllers.deleteCart);
 
 router.post('/', controllers.createCart);
 
-router.post('/add/:cartId/product/:productId', controllers.addProductToCart);
+router.post('/carts/:cartId/product/:productId', controllers.addProductToCart);
+
+router.delete('/carts/:cartId/product/:productId', controllers.removeProductFromCart);
+
+router.put('/carts/:cartId', controllers.updateProductFromCart);
+
+router.put('/carts/:cartId/product/:productId', controllers.updateProductFromCartC);
+
+router.delete('/carts/:cartId', controllers.removeAllProductsFromCart);
   
 export default router;

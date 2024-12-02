@@ -1,9 +1,9 @@
 import { productsDao } from "../daos/mongodb/products.daos.js";
 import { CustomError } from "../utils/error.custom.js";
 
-export const getAllProducts = async (page, limit, first_name, sort) => {
+export const getAllProducts = async (page, limit, category, status, sort) => {
   try {
-    return productsDao.getAllProducts(page, limit, first_name, sort);
+    return productsDao.getAllProducts(page, limit, category, status, sort);
   } catch (error) {
     throw new Error(error);
   }

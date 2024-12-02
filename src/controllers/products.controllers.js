@@ -2,18 +2,21 @@ import * as services from "../services/products.services.js";
 
 export const getAllProducts = async (req, res, next) => {
   try {
-    const { page, limit, first_name, sort } = req.query;
+    const { page, limit, category, status, sort } = req.query;
     const response = await services.getAllProducts(
       page,
       limit,
-      first_name,
+      category,
+      status,
       sort
     );
+    console.log(response);
     res.json({
       results: response.docs,
       info: {
         count: response.totalDocs,
         pages: response.totalPages,
+        pageActual: response.page,
         next: response.hasNextPage
           ? [
               `http://localhost:8080/products/view/realTimeProducts?page=${response.nextPage}`,
