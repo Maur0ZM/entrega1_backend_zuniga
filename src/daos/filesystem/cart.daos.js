@@ -1,8 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import fs from "node:fs";
 import path from "path";
-import productsManager from "./products.manager.js";
-import { error } from "node:console";
+import productsManager from "../mongodb/products.daos.js";
 
 class CartManager {
   constructor(path) {

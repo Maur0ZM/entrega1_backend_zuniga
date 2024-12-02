@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import fs from "node:fs";
 import path from "path";
-import { error } from "node:console";
 
-class ProductsManager {
+class ProductDaoFilesystem {
   constructor(path) {
     this.path = path;
   }
